@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ $users = DB::table('users')->get();
     return view('dashboard', compact('users'));
 })->name('dashboard');
 
-Route::get('/category/all', [\App\Http\Controllers\CategoryController::class, 'AllCat'])->name('all.category');
-Route::post('/category/add', [\App\Http\Controllers\CategoryController::class, 'AddCat'])->name('store.category');
-Route::delete('/category/remove/{id}', [\App\Http\Controllers\CategoryController::class, 'DestroyCat'])->name('destroy.category');
+Route::get('/category/all', [CategoryController::class, 'AllCat'])->name('all.category');
+Route::post('/category/add', [CategoryController::class, 'AddCat'])->name('store.category');
+Route::put('/category/update/{id}', [CategoryController::class, 'UpdateCat'])->name('update.category');
+Route::delete('/category/remove/{id}', [CategoryController::class, 'DestroyCat'])->name('destroy.category');
+Route::get('/category/edit/{id}', [CategoryController::class, 'EditCat'])->name('edit.category');

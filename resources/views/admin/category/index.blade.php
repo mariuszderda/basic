@@ -46,11 +46,11 @@
                                             @endif
                                         </td>
                                         <td class="flex">
-                                            <a href="#" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('edit.category', $category->id)}}" class="btn btn-info">Edit</a>
                                             <form action="{{ route('destroy.category', $category->id) }}" class="inline" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you confirm to delete category {{ $category->category_name }}?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>

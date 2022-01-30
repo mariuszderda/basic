@@ -21,28 +21,38 @@ class CategoryController extends Controller
         $validated_data = $request->validate([
             'category_name' => 'required|unique:categories|string|max:12',
         ],
-        [
-            'category_name.required' => 'Please Input Category Name',
+            [
+                'category_name.required' => 'Please Input Category Name',
+            ]);
+
+        Category::insert([
+            'category_name' => $request->category_name,
+            'user_id' => Auth::user()->id,
+            'created_at' => Carbon::now(),
         ]);
-
-//        Category::insert([
-//           'category_name' => $request->category_name,
-//           'user_id' => Auth::user()->id,
-//            'created_at' =>Carbon::now(),
-//        ]);
-        $data = array();
-        $data['category_name'] = $request->category_name;
-        $data['user_id'] = Auth::user()->id;
-        DB::table('categories')->insert($data);
-
-
+//        $data = array();
+//        $data['category_name'] = $request->category_name;
+//        $data['user_id'] = Auth::user()->id;
+//        DB::table('categories')->insert($data);
 
 
         return redirect()->back()->with('success', 'Category add successfully');
     }
 
-    public function UpdateCat($id)
+    public function UpdateCat(Request $request, $id)
     {
+        Category::find($id)->update([
+            'category_name' => $request->category_name,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->route('all.category')->with('success', 'Category updated successfully');
+    }
+
+    public function EditCat($id)
+    {
+        $categories = Category::find($id);
+        return view('admin.category.edit', compact('categories'));
     }
 
     public function DestroyCat(Category $id, Request $request)

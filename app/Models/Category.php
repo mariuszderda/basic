@@ -10,6 +10,10 @@ class Category extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'category_name', 'user_id'
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
