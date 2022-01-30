@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+
+//    $users= User::all();
+$users = DB::table('users')->get();
+
+    return view('dashboard', compact('users'));
 })->name('dashboard');
+
+Route::get('/category/all', [\App\Http\Controllers\CategoryController::class, 'AllCat'])->name('all.category');
+Route::post('/category/add', [\App\Http\Controllers\CategoryController::class, 'AddCat'])->name('store.category');
+Route::delete('/category/remove/{id}', [\App\Http\Controllers\CategoryController::class, 'DestroyCat'])->name('destroy.category');
