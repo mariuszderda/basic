@@ -16,7 +16,7 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-8 mb-4">
+                <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
                             All Category
@@ -46,8 +46,7 @@
                                             @endif
                                         </td>
                                         <td class="flex">
-                                            <a href="{{ route('edit.category', $category->id)}}"
-                                               onclick="return confirm('Are you sure?')" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('edit.category', $category->id)}}" class="btn btn-info">Edit</a>
                                             <a href="{{ route('remove.category', $category->id)}}"
                                                class="btn btn-danger ml-2"
                                                onclick="return confirm('Are you sure?')">Delete</a>
@@ -57,7 +56,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="p-5">
+                        <div>
                             {{ $categories->links() }}
                         </div>
                     </div>
@@ -139,4 +138,4 @@
         </div>
     </div>
 </x-app-layout>
-<?php
+
