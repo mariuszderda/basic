@@ -16,7 +16,7 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8 mb-4">
                     <div class="card">
                         <div class="card-header">
                             All Category
@@ -39,26 +39,25 @@
                                         <td>{{ $category->category_name }}</td>
                                         <td>{{ $category->user->name }}</td>
                                         <td>
-                                            @if($category->created_at === NULL)
+                                            @if($category->created_at == NULL)
                                                 <span>Brak daty</span>
                                             @else
                                                 {{ $category->created_at->diffForHumans() }}
                                             @endif
                                         </td>
                                         <td class="flex">
-                                            <a href="{{ route('edit.category', $category->id)}}" class="btn btn-info">Edit</a>
-                                            <form action="{{ route('destroy.category', $category->id) }}" class="inline" method="POST">
-                                                @csrf
-                                                @method("DELETE")
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you confirm to delete category {{ $category->category_name }}?')">Delete</button>
-                                            </form>
+                                            <a href="{{ route('edit.category', $category->id)}}"
+                                               onclick="return confirm('Are you sure?')" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('remove.category', $category->id)}}"
+                                               class="btn btn-danger ml-2"
+                                               onclick="return confirm('Are you sure?')">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        <div>
+                        <div class="p-5">
                             {{ $categories->links() }}
                         </div>
                     </div>
@@ -88,6 +87,54 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            Trashed Category
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Deleted At</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($trashCategories as $trashCategory)
+                                    <tr>
+                                        <th class="scope">{{ $trashCategories->firstItem() +  $loop->index }}</th>
+                                        <td>{{ $trashCategory->category_name }}</td>
+                                        <td>{{ $trashCategory->user->name }}</td>
+                                        <td>
+                                            @if($trashCategory->deleted_at === NULL)
+                                                <span>Brak daty</span>
+                                            @else
+                                                {{ $trashCategory->deleted_at->diffForHumans() }}
+                                            @endif
+                                        </td>
+                                        <td class="flex">
+                                            <a href="{{ route('restore.category', $trashCategory->id)}}"
+                                               class="btn btn-info"
+                                               onclick="return confirm('Are you sure?')">Restore</a>
+                                            <a href="{{ route('pdelete.category', $trashCategory->id)}}"
+                                               class="btn btn-danger ml-2" onclick="return confirm('Are you sure?')">P
+                                                Delete</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            {{ $trashCategories->links() }}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

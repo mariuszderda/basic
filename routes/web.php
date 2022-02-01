@@ -30,5 +30,7 @@ $users = DB::table('users')->get();
 Route::get('/category/all', [CategoryController::class, 'AllCat'])->name('all.category');
 Route::post('/category/add', [CategoryController::class, 'AddCat'])->name('store.category');
 Route::put('/category/update/{id}', [CategoryController::class, 'UpdateCat'])->name('update.category');
-Route::delete('/category/remove/{id}', [CategoryController::class, 'DestroyCat'])->name('destroy.category');
+Route::get('/category/restore/{id}', [CategoryController::class, 'restoreCat'])->name('restore.category');
+Route::get('/category/remove/{id}', [CategoryController::class, 'RemoveCat'])->name('remove.category');
+Route::get('/category/pdelete/{id}', [CategoryController::class, 'PDelete'])->name('pdelete.category');
 Route::get('/category/edit/{id}', [CategoryController::class, 'EditCat'])->name('edit.category');
