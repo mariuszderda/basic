@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -14,15 +15,33 @@ class BrandController extends Controller
         return view('admin.brand.index', compact('brands'));
     }
 
-    public function AddBrand(Request $request)
+    public function StoreBrand(Request $request): RedirectResponse
     {
         $validated_data = $request->validate([
-            'brand_name' => ['required', 'max:255', 'unique:brands']
+            'brand_name' => ['required', 'min:3', 'unique:brands'],
+            'brand_image' => 'required|mimes:jpg,jpeg,png'
+        ],
+        [
+            'brand_name.required' => 'Please Input Brand Name.',
+            'brand_name.unique' => 'This brand name is already exist.'
         ]);
 
-        $brand = Brand::insert([
+        $brand_image = $request->file('brand_image');
+
+        $name_gen = hexdec(uniqid('', true));
+        $image_ext = strtolower($brand_image->getClientOriginalExtension());
+
+        $img_name = $name_gen.'.'.$image_ext;
+
+        $up_location = 'image/brand/';
+
+        $last_img = $up_location.$img_name;
+
+        $brand_image->move($up_location,$img_name);
+
+        Brand::insert([
             'brand_name' => $request->brand_name,
-            'brand_image' => 'test',
+            'brand_image' => $last_img,
             'created_at' => Carbon::now(),
         ]);
 
@@ -30,7 +49,7 @@ class BrandController extends Controller
 
     }
 
-    public function RemoveBrand($id)
+    public function RemoveBrand($id): RedirectResponse
     {
         $brand = Brand::find($id)->delete();
 

@@ -37,7 +37,7 @@
                                     <tr>
                                         <th class="scope">{{ $brands->firstItem() +  $loop->index }}</th>
                                         <td>{{ $brand->brand_name }}</td>
-                                        <td> Brand image</td>
+                                        <td><img src="{{ asset($brand->brand_image) }}" width="70" height="40" alt=""></td>
                                         <td>
                                             @if($brand->created_at == NULL)
                                                 <span>Brak daty</span>
@@ -67,14 +67,25 @@
                             Add Brand
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('store.brand') }}" method="POST">
+                            <form action="{{ route('store.brand') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <input type="text" class="form-control" id="brandName"
                                            aria-describedby="brandName" name="brand_name"
-                                           placeholder="Category name">
+                                           placeholder="Brand name">
                                     @error('brand_name')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="brandImage">Brand Name</label>
+                                    <input type="file" class="form-control" id="brandImage"
+                                           aria-describedby="brandImage" name="brand_image"
+                                           placeholder="Brand Image">
+                                    @error('brand_image')
                                     <span class="text-danger">
                                         {{ $message }}
                                     </span>

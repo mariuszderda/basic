@@ -26,10 +26,21 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="categoryName">Brand Name</label>
-                                    <input type="text" class="form-control" id="categoryName"
-                                           aria-describedby="categoryName" name="category_name"
-                                           value="{{ $brand->brand_name }}">
+                                    <label for="brandName">Brand Name</label>
+                                    <input type="text" class="form-control" id="brandName"
+                                           aria-describedby="brandName" name="brand_name"
+                                          value="{{ $brand->brand_name }}">
+                                    @error('brand_name')
+                                    <span class="text-danger">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="brandImage">Brand Name</label>
+                                    <input type="file" class="form-control" id="brandImage"
+                                           aria-describedby="brandImage" name="brand_image"
+                                           placeholder="Brand Image">
                                     @error('brand_name')
                                     <span class="text-danger">
                                         {{ $message }}
