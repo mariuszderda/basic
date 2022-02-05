@@ -22,9 +22,9 @@
                             Edit Brand
                         </div>
                         <div class="card-body">
-                            <form action="" method="POST">
+                            <form action="{{ route('update.brand', $brand->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
+                                <input type="hidden" name="old_image" value="{{ $brand->brand_image  }}">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <input type="text" class="form-control" id="brandName"
@@ -37,15 +37,19 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="brandImage">Brand Name</label>
+                                    <label for="brandImage">Brand Image</label>
+
                                     <input type="file" class="form-control" id="brandImage"
                                            aria-describedby="brandImage" name="brand_image"
-                                           placeholder="Brand Image">
+                                           value="{{ $brand->brand_image }}">
                                     @error('brand_name')
                                     <span class="text-danger">
                                         {{ $message }}
                                     </span>
                                     @enderror
+                                </div>
+                                <div class="form-group">
+                                    <img src="{{ asset($brand->brand_image) }}" width="200" alt="brand logo image">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Update brand</button>

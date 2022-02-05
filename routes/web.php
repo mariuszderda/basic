@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MultipicController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -43,3 +44,9 @@ Route::get('/brand/all', [BrandController::class, 'AllBrand'])->name('all.brand'
 Route::post('/brand/add', [BrandController::class, 'StoreBrand'])->name('store.brand');
 Route::get('/brand/edit/{id}', [BrandController::class, 'EditBrand'])->name('edit.brand');
 Route::get('/brand/remove/{id}', [BrandController::class, 'RemoveBrand'])->name('remove.brand');
+Route::post('/brand/update/{id}', [BrandController::class, 'UpdateBrand'])->name('update.brand');
+
+// multi image route
+Route::get('/multi/image', [BrandController::class, 'Multipic'])->name('multi.image');
+Route::post('/multi/add', [BrandController::class, 'StoreImage'])->name('store.image');
+
