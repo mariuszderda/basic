@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Multipic;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -150,5 +151,11 @@ class BrandController extends Controller
 
         return redirect()->back()->with('success', 'Image successfully inserted');
 
+    }
+
+    public function Logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Logout');
     }
 }

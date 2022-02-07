@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\MultipicController;
+use App\Http\Controllers\SliderController;
+use App\Models\Brand;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +19,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $brands = Brand::all();
+    return view('home', compact('brands'));
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 //    $users= User::all();
-$users = DB::table('users')->get();
+//$users = DB::table('users')->get();
 
-    return view('dashboard', compact('users'));
+    return view('admin.index');
 })->name('dashboard');
 
 // for category route
@@ -50,3 +52,9 @@ Route::post('/brand/update/{id}', [BrandController::class, 'UpdateBrand'])->name
 Route::get('/multi/image', [BrandController::class, 'Multipic'])->name('multi.image');
 Route::post('/multi/add', [BrandController::class, 'StoreImage'])->name('store.image');
 
+Route::get('/user/logout', [BrandController::class, 'Logout'])->name('user.logout');
+
+//slider route
+
+Route::get('/slider/all', [SliderController::class, 'SliderAll'])->name('slider.all');
+Route::get('/slider/add', [SliderController::class, 'SliderAdd'])->name('slider.add');
