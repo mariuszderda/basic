@@ -22,6 +22,7 @@
                 <div class="chartjs-wrapper">
                     <canvas id="dual-line"></canvas>
                 </div>
+
             </div>
         </div>
     </div>

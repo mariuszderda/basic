@@ -1,9 +1,6 @@
 @extends('admin.admin_master')
 
 @section('admin')
-    @extends('admin.admin_master')
-
-@section('admin')
     <div class="py-12">
         <div class="container">
             @if(session('success'))
@@ -26,30 +23,26 @@ Slider List
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col" style="width: 5%">#</th>
+                                    <th scope="col" style="width: 15%">Title</th>
+                                    <th scope="col" style="width: 35%">Description</th>
+                                    <th scope="col" style="width: 25%">Image</th>
+                                    <th scope="col" style="width: 20%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($sliders as $slider)
                                     <tr>
-                                        <th class="scope">{{ $sliders->firstItem() +  $loop->index }}</th>
-                                        <td>{{ $slider->category_name }}</td>
-                                        <td>{{ $slider->user->name }}</td>
+                                        <th class="scope">{{ $loop->index }}</th>
+                                        <td>{{ $slider->title }}</td>
+                                        <td>{{ $slider->description }}</td>
                                         <td>
-                                            @if($slider->created_at == NULL)
-                                                <span>Brak daty</span>
-                                            @else
-                                                {{ $slider->created_at->diffForHumans() }}
-                                            @endif
+                                            <img src="{{asset($slider->image)}}" style="width: 100%;">
                                         </td>
                                         <td class="flex">
-                                            <a href="{{ route('edit.category', $slider->id)}}"
+                                            <a href="{{ route('slider.edit', $slider->id)}}"
                                                class="btn btn-info">Edit</a>
-                                            <a href="{{ route('remove.category', $slider->id)}}"
+                                            <a href="{{ route('slider.remove', $slider->id)}}"
                                                class="btn btn-danger ml-2"
                                                onclick="return confirm('Are you sure?')">Delete</a>
                                         </td>
@@ -66,4 +59,3 @@ Slider List
 @endsection
 
 
-@endsection

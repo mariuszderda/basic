@@ -7,24 +7,28 @@
                 <h2>Add new slider</h2>
             </div>
             <div class="card-body">
-                <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('slider.update', $slider->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden" name="old_image" value="{{ $slider->image }}">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" name="title" id="title"
-                               placeholder="Enter title">
-                    </div>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title"
+                            value="{{ $slider->title }}">
+                    </div> =>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                        <textarea class="form-control" name="description" id="description"
+                            rows="3">{{ $slider->description }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="image">Image</label>
+                        <label for="image" class="w-100">Image</label>
+                        <img src="{{ asset($slider->image) }}" class="mb-4" alt="" width="300">
                         <input type="file" class="form-control-file" name="image" id="image">
                     </div>
+
                     <div class="form-footer pt-4 pt-5 mt-4 border-top">
                         <button type="submit" class="btn btn-primary btn-default">Submit</button>
-                        <button type="submit" class="btn btn-secondary btn-default">Cancel</button>
                     </div>
                 </form>
             </div>

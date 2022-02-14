@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SliderController;
 use App\Models\Brand;
+use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $sliders = Slider::all();
     $brands = Brand::all();
-    return view('home', compact('brands'));
+    return view('home', compact('brands', 'sliders'));
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -58,3 +60,8 @@ Route::get('/user/logout', [BrandController::class, 'Logout'])->name('user.logou
 
 Route::get('/slider/all', [SliderController::class, 'SliderAll'])->name('slider.all');
 Route::get('/slider/add', [SliderController::class, 'SliderAdd'])->name('slider.add');
+Route::post('/slider/store', [SliderController::class, 'store'])->name('slider.store');
+Route::get('/slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
+Route::put('/slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
+Route::get('/slider.delete/{id}', [SliderController::class, 'delete'])->name('slider.remove');
+
