@@ -64,6 +64,11 @@
                                     <span class="nav-text">Multi Image</span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="sidenav-item-link" href="{{ route('about.list') }}">
+                                    <span class="nav-text">About</span>
+                                </a>
+                            </li>
 
 
                         </div>

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SliderController;
+use App\Models\About;
 use App\Models\Brand;
 use App\Models\Slider;
 use App\Models\User;
@@ -22,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $sliders = Slider::all();
     $brands = Brand::all();
-    return view('home', compact('brands', 'sliders'));
+    $about = About::latest()->get()->first();
+    return view('home', compact('brands', 'sliders', 'about'));
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -64,4 +67,13 @@ Route::post('/slider/store', [SliderController::class, 'store'])->name('slider.s
 Route::get('/slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
 Route::put('/slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
 Route::get('/slider.delete/{id}', [SliderController::class, 'delete'])->name('slider.remove');
+
+// about route
+
+Route::get('/about/list', [AboutController::class, 'index'])->name('about.list');
+Route::get('/about/edit/{id}', [AboutController::class, 'edit'])->name('about.edit');
+Route::post('/about/update/{id}', [AboutController::class, 'update'])->name('about.update');
+Route::get('/about/create', [AboutController::class, 'create'])->name('about.create');
+Route::post('/about/add', [AboutController::class, 'store'])->name('about.store');
+Route::get('/about/delete/{id}', [AboutController::class, 'delete'])->name('about.delete');
 
